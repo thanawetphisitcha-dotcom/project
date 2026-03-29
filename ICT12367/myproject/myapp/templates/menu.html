@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}เมนูอาหาร - ร้านอร่อยเด็ด{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold display-5">เมนูอาหารแนะนำ</h2>
+        <div class="mx-auto bg-premium-red mb-3" style="height: 4px; width: 60px;"></div>
+        <p class="text-muted">สัมผัสรสชาติความอร่อยจากวัตถุดิบชั้นเลิศที่เราคัดสรรมาเพื่อคุณ</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        {% for item in food_items %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden menu-card">
+                <div class="position-relative overflow-hidden" style="height: 200px;">
+                    <img src="{% get_static_prefix %}{{ item.img }}" class="card-img-top w-100 h-100 object-fit-cover" alt="{{ item.name }}">
+                    <div class="position-absolute bottom-0 end-0 m-2">
+                        <span class="badge bg-premium-red px-3 py-2 rounded-pill shadow">
+                            ฿{{ item.price }}
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body text-center bg-white">
+                    <h6 class="card-title fw-bold mb-0">{{ item.name }}</h6>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+        <p class="mb-3">สนใจลิ้มลองรสชาติอาหารของเรา?</p>
+        <a href="{% url 'booking' %}" class="btn btn-premium-red btn-lg rounded-pill px-5 shadow">
+            จองโต๊ะเลยตอนนี้ <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+    </div>
+</div>
+
+<style>
+    .menu-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .menu-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    }
+    .transition-zoom {
+        transition: transform 0.5s ease;
+    }
+    .menu-card:hover .transition-zoom {
+        transform: scale(1.1);
+    }
+    .object-fit-cover {
+        object-fit: cover;
+    }
+</style>
+{% endblock %}

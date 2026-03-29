@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}ประวัติการจอง - ร้านอร่อยเด็ด{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="card-body p-4 p-md-5 bg-white">
+            <h2 class="mb-4 fw-bold border-bottom pb-3">
+                <i class="fas fa-history text-premium-red me-2"></i> ประวัติการจองของคุณ
+            </h2>
+            
+            <div class="table-responsive mt-4">
+                <table class="table table-hover align-middle text-center border-top">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="py-3">หมายเลข</th>
+                            <th class="py-3">ชื่อผู้จอง</th>
+                            <th class="py-3">โต๊ะ</th>
+                            <th class="py-3">วันที่</th>
+                            <th class="py-3">เวลา</th>
+                            <th class="py-3">จำนวนคน</th>
+                            <th class="py-3">สถานะ</th>
+                            <th class="py-3">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-light">
+                        {% for booking in bookings %}
+                        <tr>
+                            <td class="fw-bold text-muted">#B{{ booking.id|stringformat:"04d" }}</td>
+                            <td>{{ booking.name }}</td>
+                            <td><span class="badge bg-secondary rounded-pill px-3">โต๊ะ {{ booking.table.number }}</span></td>
+                            <td>{{ booking.date|date:"d M Y" }}</td>
+                            <td>{{ booking.time|time:"H:i" }} น.</td>
+                            <td>{{ booking.guests }} ท่าน</td>
+                            <td><span class="badge bg-success rounded-pill px-3"><i class="fas fa-check-circle me-1"></i> ยืนยันแล้ว</span></td>
+                            <td>
+                                <a href="{% url 'cancel_booking' booking.id %}" 
+                                   class="btn btn-outline-danger btn-sm rounded-pill px-3 transition-all" 
+                                   onclick="return confirm('คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจองโต๊ะนี้? (ข้อมูลจะถูกลบทันที)');">
+                                   <i class="fas fa-trash-alt me-1"></i> ยกเลิก
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-5">
+                                <i class="fas fa-clipboard-list fa-3x mb-3 text-light"></i><br>
+                                ยังไม่มีประวัติการจองในระบบ<br>
+                                <a href="{% url 'booking' %}" class="btn btn-premium-red btn-sm mt-3 rounded-pill px-4">จองโต๊ะเลย</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
