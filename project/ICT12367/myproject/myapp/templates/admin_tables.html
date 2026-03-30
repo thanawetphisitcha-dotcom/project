@@ -1,0 +1,84 @@
+{% extends 'admin_base.html' %}
+{% block title %}จัดการโต๊ะอาหาร - อร่อยเด็ด Admin{% endblock %}
+{% block header_title %}จัดการโต๊ะอาหาร{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="mb-0 text-muted">สถานะโต๊ะทั้งหมดในร้าน</h5>
+    <button type="button" class="btn btn-danger rounded-pill px-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#addTableModal">
+        <i class="fas fa-plus me-2"></i>เพิ่มโต๊ะใหม่
+    </button>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} alert-dismissible fade show rounded-pill shadow-sm">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="row g-4">
+    {% for table in tables %}
+    <div class="col-md-4 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100 
+            {% if table.status == 'available' %}border-start border-success border-5
+            {% elif table.status == 'maintenance' %}border-start border-warning border-5
+            {% else %}border-start border-danger border-5{% endif %}">
+            
+            <div class="card-body text-center p-4">
+                <h1 class="display-4 fw-bold mb-0 text-dark">{{ table.number }}</h1>
+                <p class="text-muted mb-4"><i class="fas fa-users me-2"></i>{{ table.seats }} ที่นั่ง</p>
+                
+                <form action="{% url 'update_table_status' table.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group input-group-sm">
+                        <select name="status" class="form-select text-center rounded-start-pill border-secondary">
+                            <option value="available" {% if table.status == 'available' %}selected{% endif %}>🟢 พร้อมใช้</option>
+                            <option value="maintenance" {% if table.status == 'maintenance' %}selected{% endif %}>🟡 ซ่อมแซม</option>
+                            <option value="closed" {% if table.status == 'closed' %}selected{% endif %}>🔴 ปิดบริการ</option>
+                        </select>
+                        <button type="submit" class="btn btn-dark rounded-end-pill px-3">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5 text-muted bg-white rounded-4 shadow-sm">
+        <i class="fas fa-chair fa-3x mb-3 text-light"></i>
+        <h5>ยังไม่มีข้อมูลโต๊ะในระบบ</h5>
+        <p>คลิกปุ่ม "เพิ่มโต๊ะใหม่" ด้านบนเพื่อเริ่มต้น</p>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="modal fade" id="addTableModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">เพิ่มโต๊ะใหม่</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{% url 'add_table' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">หมายเลขโต๊ะ <span class="text-danger">*</span></label>
+                        <input type="text" name="number" class="form-control rounded-pill" placeholder="เช่น A1, B2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">จำนวนที่นั่ง <span class="text-danger">*</span></label>
+                        <input type="number" name="seats" class="form-control rounded-pill" value="4" min="1" required>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 justify-content-center">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="submit" class="btn btn-danger rounded-pill px-5 shadow-sm">บันทึกข้อมูล</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

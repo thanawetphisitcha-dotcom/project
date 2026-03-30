@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ร้านอาหารอร่อยเด็ด{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #f8f9fa; 
+        }
+        
+        .bg-premium-red { background-color: #A31D1D !important; }
+        .text-premium-red { color: #A31D1D !important; }
+        
+        .btn-premium-red {
+            background-color: #A31D1D;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .btn-premium-red:hover {
+            background-color: #1a1a1a; 
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .navbar-dark-premium {
+            background-color: #121212 !important;
+            border-bottom: 3px solid #A31D1D;
+        }
+        
+        /* เพิ่มเติม: แต่งให้เมนู active หรือ hover ดูชัดเจนขึ้น */
+        .nav-link:hover { color: #A31D1D !important; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-dark-premium shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="{% url 'home' %}">
+                <i class="fas fa-wine-glass-alt text-premium-red me-2"></i>อร่อยเด็ด
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto align-items-center">
+                    <a class="nav-link text-white mx-2" href="{% url 'home' %}">หน้าแรก</a>
+                    <a class="nav-link text-white mx-2" href="{% url 'menu' %}">เมนูอาหาร</a> 
+                    
+                    {% if user.is_authenticated %}
+                        <a class="nav-link text-white mx-2" href="{% url 'booking' %}">จองโต๊ะ</a>
+                        <a class="nav-link text-white mx-2" href="{% url 'my_bookings' %}">ประวัติการจอง</a>
+                        
+                        <div class="d-flex align-items-center ms-lg-3">
+                            <span class="fw-bold text-premium-red me-3">
+                                <i class="fas fa-user-circle me-1"></i> คุณ {{ user.username }}
+                            </span>
+                            <form action="{% url 'logout' %}" method="post" class="m-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                                    <i class="fas fa-sign-out-alt me-1"></i> ออกจากระบบ
+                                </button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <a class="nav-link text-white mx-2" href="{% url 'login' %}">จองโต๊ะ (ต้องล็อกอิน)</a>
+                        <div class="ms-lg-3">
+                            <a class="btn btn-outline-light btn-sm rounded-pill px-4 me-2" href="{% url 'login' %}">เข้าสู่ระบบ</a>
+                            <a class="btn btn-premium-red btn-sm rounded-pill px-4" href="{% url 'register' %}">สมัครสมาชิก</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% if messages %}
+    <div class="container mt-4">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm border-0" role="alert">
+                <i class="fas fa-info-circle me-2"></i> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

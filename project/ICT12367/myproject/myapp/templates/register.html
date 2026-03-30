@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}สมัครสมาชิก - ร้านอร่อยเด็ด{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden mt-3">
+                <div class="card-header bg-dark text-white p-4 border-bottom border-3" style="border-color: #A31D1D !important;">
+                    <h3 class="mb-0 text-center fw-bold">
+                        <i class="fas fa-user-plus text-premium-red me-2"></i> สมัครสมาชิกใหม่
+                    </h3>
+                </div>
+                
+                <div class="card-body p-4 p-md-5 bg-white auth-form-container">
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-dark">{{ field.label }}</label>
+                                {{ field }}
+                                
+                                {% if field.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in field.errors %}
+                                            <i class="fas fa-times-circle me-1"></i>{{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                
+                                {% if field.help_text %}
+                                    <div class="form-text text-muted small mt-1">{{ field.help_text|safe }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        <div class="mt-5 text-center">
+                            <button type="submit" class="btn btn-premium-red btn-lg w-100 rounded-pill fw-bold shadow-sm py-3">
+                                สมัครสมาชิก <i class="fas fa-check-circle ms-2"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4 text-muted">
+                    
+                    <div class="text-center">
+                        <span class="text-muted">มีบัญชีอยู่แล้ว?</span>
+                        <a href="{% url 'login' %}" class="text-premium-red fw-bold text-decoration-none ms-1">เข้าสู่ระบบที่นี่</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .auth-form-container input[type="text"],
+    .auth-form-container input[type="password"],
+    .auth-form-container input[type="email"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1.1rem;
+        border-radius: 0.5rem;
+        border: none !important;
+        background-color: #f8f9fa !important; /* สีเทาอ่อนแบบ bg-light */
+        transition: box-shadow 0.2s;
+    }
+    
+    .auth-form-container input:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(163, 29, 29, 0.25); /* เงาสีแดงตอนกดพิมพ์ */
+    }
+    
+    /* ซ่อนรายการ bullet ของ error ที่มากับ Django */
+    .auth-form-container ul.errorlist {
+        list-style-type: none;
+        padding-left: 0;
+        color: #dc3545;
+        font-size: 0.875em;
+        margin-top: 0.25rem;
+    }
+</style>
+{% endblock %}

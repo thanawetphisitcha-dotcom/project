@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}จองสำเร็จ - ร้านอร่อยเด็ด{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <div class="alert alert-success shadow-lg p-5" role="alert">
+        <i class="fas fa-check-circle fa-5x mb-3"></i>
+        <h1 class="alert-heading fw-bold">จองโต๊ะสำเร็จ!</h1>
+        <p class="lead mt-3">ขอบคุณที่ใช้บริการ ทางเราได้รับข้อมูลการจองของคุณเรียบร้อยแล้ว</p>
+        <hr>
+        <p class="mb-0 text-muted">คุณสามารถตรวจสอบรายละเอียดการจองได้ที่หน้า "ประวัติการจอง"</p>
+        <div class="mt-4">
+            <a href="/my-bookings/" class="btn btn-primary px-4 me-2">ไปดูประวัติ</a>
+            <a href="/" class="btn btn-outline-secondary px-4">กลับหน้าหลัก</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
