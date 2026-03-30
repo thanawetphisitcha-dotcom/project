@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-dark text-white p-4">
+                    <h3 class="mb-0 text-center"><i class="fas fa-edit text-warning me-2"></i> แก้ไขการจอง</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ชื่อ-นามสกุล</label>
+                            <input type="text" name="name" class="form-control" value="{{ booking.name }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">เบอร์โทรศัพท์</label>
+                            <input type="tel" name="phone" class="form-control" value="{{ booking.phone }}" required>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success w-100 py-3 rounded-pill fw-bold">บันทึกการเปลี่ยนแปลง</button>
+                            <a href="{% url 'my_bookings' %}" class="btn btn-light w-100 py-3 rounded-pill fw-bold border">ยกเลิก</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
