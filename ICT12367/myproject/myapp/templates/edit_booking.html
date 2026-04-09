@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}แก้ไขข้อมูลการจอง - ร้านอร่อยเด็ด{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-header bg-premium-red text-white text-center py-3 rounded-top-4">
+                    <h4 class="mb-0 fw-bold">📝 แก้ไขข้อมูลการจอง</h4>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted text-center mb-4">คุณกำลังแก้ไขการจองหมายเลข #B{{ booking.id|stringformat:"04d" }}</p>
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ชื่อผู้จอง</label>
+                            <input type="text" name="name" class="form-control rounded-pill px-3" value="{{ booking.name }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">เบอร์โทรศัพท์</label>
+                            <input type="text" name="phone" class="form-control rounded-pill px-3" value="{{ booking.phone }}" required>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <label class="form-label small text-muted">วันที่จอง</label>
+                                <p class="fw-bold">{{ booking.date }}</p>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small text-muted">เวลา / โต๊ะ</label>
+                                <p class="fw-bold">{{ booking.time }} น. / โต๊ะ {{ booking.table.number }}</p>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-premium-red rounded-pill py-2 fw-bold shadow-sm">
+                                บันทึกการเปลี่ยนแปลง
+                            </button>
+                            <a href="{% url 'my_bookings' %}" class="btn btn-outline-secondary rounded-pill py-2 fw-bold">
+                                ยกเลิก
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

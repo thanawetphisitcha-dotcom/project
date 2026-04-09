@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}หน้าแรก - ร้านอร่อยเด็ด{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0 mb-5">
+    <div class="position-relative text-center text-white d-flex align-items-center justify-content-center" 
+     style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('/static/images/Full_home.jpg'); background-size: cover; background-position: center; height: 70vh;">
+        
+        <div class="px-3" style="z-index: 1;">
+            <h1 class="display-3 fw-bold mb-3"><span class="text-premium-red">อร่อยเด็ด</span> เรสเตอรองต์</h1>
+            <p class="lead mb-4 fw-light fs-4">สัมผัสประสบการณ์อาหารรสเลิศ ในบรรยากาศสุดเอ็กซ์คลูซีฟ</p>
+            
+            <a href="{% url 'booking' %}" class="btn btn-premium-red btn-lg px-5 py-3 rounded-pill shadow">
+                <i class="fas fa-calendar-alt me-2"></i> จองโต๊ะล่วงหน้า
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-4">
+                <i class="fas fa-star text-premium-red fa-3x mb-3"></i>
+                <h4 class="fw-bold text-dark">วัตถุดิบพรีเมียม</h4>
+                <p class="text-muted">คัดสรรวัตถุดิบชั้นเลิศ สดใหม่ทุกวัน เพื่อให้ทุกจานคือผลงานชิ้นเอก</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 bg-dark text-white rounded-4">
+                <i class="fas fa-glass-cheers text-premium-red fa-3x mb-3"></i>
+                <h4 class="fw-bold">บรรยากาศส่วนตัว</h4>
+                <p class="text-light opacity-75">ออกแบบมาเพื่อความผ่อนคลาย เหมาะสำหรับทุกมื้อสำคัญของคุณ</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-4">
+                <i class="fas fa-concierge-bell text-premium-red fa-3x mb-3"></i>
+                <h4 class="fw-bold text-dark">บริการระดับ 5 ดาว</h4>
+                <p class="text-muted">พนักงานของเราพร้อมดูแลคุณอย่างมืออาชีพด้วยใจรักบริการ</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
